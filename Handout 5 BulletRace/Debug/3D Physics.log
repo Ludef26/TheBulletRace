@@ -1,1 +1,1 @@
-﻿LINK : fatal error LNK1104: no se puede abrir el archivo 'Bullet/libx86/BulletDynamics_debug.lib'
+﻿LINK : fatal error LNK1104: no se puede abrir el archivo 'glut/glut32.lib'
