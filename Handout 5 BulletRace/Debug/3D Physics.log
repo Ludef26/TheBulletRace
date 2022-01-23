@@ -1,1 +1,2 @@
-﻿LINK : fatal error LNK1104: no se puede abrir el archivo 'glut/glut32.lib'
+﻿  ModulePhysics3D.cpp
+  3D Physics.vcxproj -> E:\TheBulletRace\Handout 5 BulletRace\Debug\3D Physics - class5.exe

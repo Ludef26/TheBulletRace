@@ -64,7 +64,14 @@ bool ModulePhysics3D::Start()
 
 		btRigidBody* body = new btRigidBody(rbInfo);
 		world->addRigidBody(body);
+
+	Cube s(20,20,20);
+	s.SetPos(0, 0, 40);
+	AddBody(s);
+	
 	}
+	
+	
 
 	return true;
 }
@@ -119,6 +126,8 @@ update_status ModulePhysics3D::Update(float dt)
 	{
 		world->debugDrawWorld();
 
+
+
 		// Render vehicles
 		p2List_item<PhysVehicle3D*>* item = vehicles.getFirst();
 		while(item)
@@ -134,6 +143,8 @@ update_status ModulePhysics3D::Update(float dt)
 			float force = 30.0f;
 			AddBody(s)->Push(-(App->camera->Z.x * force), -(App->camera->Z.y * force), -(App->camera->Z.z * force));
 		}
+
+			
 	}
 
 	return UPDATE_CONTINUE;
