@@ -35,7 +35,7 @@ jobs:
         mkdir build
         cd build
         mkdir $
-        cd ../../Wasabi-Warriors-RPG
+        cd ../../TheBulletRace
         dir
         
     # Setup MSBuild.exe path if required
