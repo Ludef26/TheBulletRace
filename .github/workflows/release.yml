@@ -29,7 +29,7 @@ jobs:
         exclusions: '*.gitignore*'
       # Creates a release uploading the release.zip file. The github token is usually under secrets.GITHUB_TOKEN, however in the future this may be different.
      - name: Create Release
-       uses: ncipollo/release-action@v1
+       uses: ncipollo/release-action@v1.10.0
        with:
         tag: $
         artifacts: "release.zip"
