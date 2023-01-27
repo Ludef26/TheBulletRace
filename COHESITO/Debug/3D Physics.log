@@ -1,4 +1,0 @@
-﻿  ModulePlayer.cpp
-E:\TheBulletRace\COHESITO\Primitive.h(6,17): warning C4099: 'PhysBody3D': nombre de tipo visto anteriormente usando 'struct' ahora se ve usando 'class'
-E:\TheBulletRace\COHESITO\Module.h(4): message : vea la declaración de 'PhysBody3D'
-  3D Physics.vcxproj -> E:\TheBulletRace\COHESITO\Debug\3D Physics - class5.exe
