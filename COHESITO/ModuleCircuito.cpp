@@ -5,6 +5,7 @@
 #include "PhysBody3D.h"
 #include "ModuleCircuito.h"
 #include "Color.h"
+#include "ModulePlayer.h"
 
 #include "Globals.h"
 #include "glmath.h"
@@ -149,7 +150,9 @@ bool ModuleCircuito::Start()
 
 update_status ModuleCircuito::Update(float dt)
 {
+	checkpoint2.Render();
 
+	
 	initialTerrain.Render();
 	firstRamp.Render();
 	first_terrain.Render();
@@ -221,3 +224,7 @@ Cube ModuleCircuito::CreateRampOrWall(vec3 position, vec3 size, float mass, Colo
 }
 
 
+void ModuleCircuito::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
+{
+	LOG("CHOQUE %d",body1,body2);
+}
