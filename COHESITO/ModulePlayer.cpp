@@ -98,6 +98,8 @@ bool ModulePlayer::Start()
 
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0, 12, 10);
+	vehicle->collision_listeners.add(this);
+	vehicle->SetId(1);
 	
 	return true;
 }
@@ -137,19 +139,27 @@ update_status ModulePlayer::Update(float dt)
 		acceleration = -MAX_ACCELERATION;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+	{
+		LOG("CHoque ");
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT)
 	{
 		brake = BRAKE_POWER;
 	}
 	//OPCIOBN PARA QUE LA CAMARA DEJE DE SEGUIR AL JUGADOR
-	vehicle->GetPos();
+	/*
+	* vehicle->GetPos();
 	if (vehicle->GetPos().z > 109.8f && vehicle->GetPos().x > -20)
 	{
 		App->camera->Look(vec3(50, 55, 160), vec3(-90, 0, 80), false);
 	}
 	//QUE LA CAMARA SIGA AL JUGADOR
 	else
-		App->camera->FollowVehicle(30);
+	*/
+	
+	App->camera->FollowVehicle(30);
 
 	vehicle->ApplyEngineForce(acceleration);
 	vehicle->Turn(turn);
@@ -165,4 +175,10 @@ update_status ModulePlayer::Update(float dt)
 }
 
 
+void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
+{
+	
 
+	LOG("CHoque ");
+	
+}

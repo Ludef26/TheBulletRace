@@ -6,6 +6,13 @@
 #include "ModuleCircuito.h"
 #include "Color.h"
 
+#include "Globals.h"
+#include "glmath.h"
+#include "Application.h"
+#include "ModuleSceneIntro.h"
+#include "Primitive.h"
+#include "PhysBody3D.h"
+
 ModuleCircuito::ModuleCircuito(Application* app, bool start_enabled) : Module(app, start_enabled)
 {}
 
@@ -17,6 +24,17 @@ bool ModuleCircuito::Start()
 	bool ret = false;
 
 	LOG("Loading Circuit");
+
+	checkpoint2.SetPos(0, 5, 0);
+	checkpoint2.size.x = 10;
+	checkpoint2.size.y = 10;
+	checkpoint2.size.z = 1;
+	checkpoint2.axis = false;
+	checkpoint2.wire = true;
+	checkpoint2.color.Set(225, 225, 0);
+	physSensor = App->physics->AddBody(checkpoint2, 0);
+	physSensor->SetAsSensor(true);
+	physSensor->SetId(2);
 
 	//INITIAL TERRAIN
 	initialTerrain.SetPos(0, 0.1f, 0);

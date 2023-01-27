@@ -6,6 +6,9 @@
 
 #define WALL_MASS 100000
 
+struct PhysBody3D;
+struct PhysMotor3D;
+
 class ModuleCircuito : public Module
 {
 public:
@@ -15,6 +18,10 @@ public:
 	bool Start();
 	update_status Update(float dt);
 	bool CleanUp();
+
+
+	Cube checkpoint2;
+	PhysBody3D* physSensor;
 
 	Cube initialTerrain;
 	PhysBody3D* physWall = nullptr;

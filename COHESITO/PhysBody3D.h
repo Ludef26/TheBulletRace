@@ -3,6 +3,7 @@
 
 #include "p2List.h"
 
+class btQuaternion;
 class btRigidBody;
 class Module;
 class vec3;
@@ -21,11 +22,17 @@ public:
 	void SetPos(float x, float y, float z);
 	vec3 GetPos() const;
 
-private:
-	btRigidBody* body = nullptr;
+	void SetAsSensor(bool is_sensor);
+	void SetId(int id);
+
 
 public:
+	btRigidBody* body = nullptr;
+
 	p2List<Module*> collision_listeners;
+	
+	int id;
+	bool is_sensor;
 };
 
 #endif // __PhysBody3D_H__

@@ -3,6 +3,8 @@
 #include "glmath.h"
 #include "Color.h"
 
+class PhysBody3D;
+
 enum PrimitiveTypes
 {
 	Primitive_Point,
@@ -31,6 +33,8 @@ public:
 	Color color;
 	mat4x4 transform;
 	bool axis,wire;
+
+	PhysBody3D* body;
 
 protected:
 	PrimitiveTypes type;
