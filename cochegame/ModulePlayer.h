@@ -43,10 +43,10 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
-	void DrawTextHUD(float x, float y, float z, const char* text);
+	void DrawTextHUD(float x, float y, float z, const char* text, int color);
 
 public:
-
+	float masa=300.0f;
 	PhysVehicle3D* vehicle;
 	float turn;
 	float acceleration;

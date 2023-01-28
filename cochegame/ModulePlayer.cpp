@@ -22,13 +22,12 @@ ModulePlayer::~ModulePlayer()
 bool ModulePlayer::Start()
 {
 	LOG("Loading player");
-
 	VehicleInfo car;
 
 	// Car properties ----------------------------------------
 	car.chassis_size.Set(3.5, 1.5, 4);
 	car.chassis_offset.Set(0, 1.5, 0);
-	car.mass = 300.0f;
+	car.mass = masa;
 	car.suspensionStiffness = 15.88f;
 	car.suspensionCompression = 0.83f;
 	car.suspensionDamping = 0.88f;
@@ -103,7 +102,7 @@ bool ModulePlayer::Start()
 
 	vehicle = App->physics->AddVehicle(car);
 
-	vehicle->SetPos(0.0f, 3.0f, 5.0f);
+	vehicle->SetPos(0.0f, 10.0f, 5.0f);
 
 	vehicle->collision_listeners.add(this);
 
@@ -128,6 +127,32 @@ update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
 
+	//CHECK POINTS
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	{
+		currentHUD = HUDStatus::C1;
+		App->scene_intro->checkpoint = 1;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	{
+		currentHUD = HUDStatus::C2;
+		App->scene_intro->checkpoint = 2;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	{
+		currentHUD = HUDStatus::C3;
+		App->scene_intro->checkpoint = 3;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+	{
+		currentHUD = HUDStatus::C4;
+		App->scene_intro->checkpoint = 4;
+	}
+	
+
+
+	//---------------------------------------------------
+	//--------------------------------CONTROLES JUGADOR
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		acceleration = MAX_ACCELERATION;
@@ -210,7 +235,8 @@ update_status ModulePlayer::Update(float dt)
 
 	char hud[80];
 
-	if (secondsPassed > 49)
+	/*
+	* if (secondsPassed > 49)
 	{
 		sprintf_s(hud, "TIME REMAINING --- 0%d:0%d", (3 - minutesPassed), (59 - secondsPassed));
 	}
@@ -218,14 +244,26 @@ update_status ModulePlayer::Update(float dt)
 	{
 		sprintf_s(hud, "TIME REMAINING --- 0%d:%d", (3 - minutesPassed), (59 - secondsPassed));
 	}
+	*/
+
+	sprintf_s(hud, "Velocidad --- %.0f", App->player->vehicle->GetKmh());
 
 	DrawTextHUD(
 		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 2.5f,
 		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY() + 7.0f,
 		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(),
-		hud
+		hud,1
 	);
 
+
+	sprintf_s(hud, "Masa Coche --- %.0f", masa);
+
+	DrawTextHUD(
+		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 2.5f,
+		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY() + 6.0f,
+		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(),
+		hud,2
+	);
 	switch (currentHUD)
 	{
 	case(HUDStatus::START):
@@ -260,7 +298,7 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 2.5f,
 		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY() + 6.5f,
 		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(),
-		hud
+		hud, 1
 	);
 
 	return UPDATE_CONTINUE;
@@ -289,9 +327,9 @@ void ModulePlayer::ResetPosition()
 		{
 			t.M[i] = initialTransf[i];
 		}
-		t.rotate(90, vec3{ 0,1,0 });
+		t.rotate(0, vec3{ 0,1,0 });
 		vehicle->SetTransform(t.M);
-		vehicle->SetPos(0, 7, 175);
+		vehicle->SetPos(0, 10, 5);
 	}
 	else if (App->scene_intro->checkpoint == 2)
 	{
@@ -300,9 +338,9 @@ void ModulePlayer::ResetPosition()
 		{
 			t.M[i] = initialTransf[i];
 		}
-		t.rotate(180, vec3{ 0,1,0 });
+		t.rotate(90, vec3{ 0,1,0 });
 		vehicle->SetTransform(t.M);
-		vehicle->SetPos(210, 3, 175);
+		vehicle->SetPos(45, 60, 80);
 	}
 	else if (App->scene_intro->checkpoint == 3)
 	{
@@ -313,7 +351,7 @@ void ModulePlayer::ResetPosition()
 		}
 		t.rotate(180, vec3{ 0,1,0 });
 		vehicle->SetTransform(t.M);
-		vehicle->SetPos(210, 22, 25);
+		vehicle->SetPos(280, 60, 80);
 	}
 	else if (App->scene_intro->checkpoint == 4)
 	{
@@ -338,17 +376,31 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	{
 		ResetPosition();
 	}
+
+	if (body2->type == ElementType::ICE)
+	{
+		//vehicle->Push(0,100,0);
+		//App->camera->Position.x = 200;
+	}
 }
 
-void ModulePlayer::DrawTextHUD(float x, float y, float z, const char* text)
+void ModulePlayer::DrawTextHUD(float x, float y, float z, const char* text,int color)
 {
-	glColor4b(255.0f, 255.0f, 255.0f, 255.0f);
+	if (color == 1) 
+	{
+	glColor4b(0.0f, 0.0f, 100.0f, 0.0f);
+	}
+	else if (color == 2) {
+	glColor4b(100.0f, 0.0f, 0.0f, 0.0f);
+	}
+
+
 	glRasterPos3f(x, y, z);
 	int textLength = strlen(text);
 
 	for (int i = 0; i < textLength; ++i)
 	{
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text[i]);
+		glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, text[i]);
 	}
 }
 
