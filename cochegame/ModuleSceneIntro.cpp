@@ -373,6 +373,76 @@ void ModuleSceneIntro::CreateCircuit()
 	Hielo1->color = { 0,0,1,97 };
 
 
+
+	// Balls for constraints links
+	// 46
+	Sphere* sphere5 = new Sphere(1);
+	sphere5->SetPos(150, 47, -100);
+	primitives.PushBack(sphere5);
+	App->physics->AddBody(*sphere5, 0.0f);
+
+	// 47
+	Sphere* sphere6 = new Sphere(5);
+	sphere6->SetPos(150, 17, -100);
+	primitives.PushBack(sphere6);
+	App->physics->AddBody(*sphere6, 1000000.0f);
+	sphere6->body->Push(25000000.0f, 0.0f, 0.0f);
+	sphere6->color = { 1,1,0,1 };
+
+	// 48
+	Sphere* sphere7 = new Sphere(11);
+	sphere7->SetPos(110, 11, -100);
+	primitives.PushBack(sphere7);
+	App->physics->AddBody(*sphere7, 0.0f, ElementType::DAMAGE);
+	sphere7->color = { 1,0,0,1 };
+
+	// 49
+	Sphere* sphere8 = new Sphere(1);
+	sphere8->SetPos(90, 20, -100);
+	primitives.PushBack(sphere8);
+	App->physics->AddBody(*sphere8, 0.0f);
+
+	// 50
+	Sphere* sphere9 = new Sphere(1.5);
+	sphere9->SetPos(90, 15, -100);
+	primitives.PushBack(sphere9);
+	App->physics->AddBody(*sphere9, 10.0f, ElementType::DAMAGE, App->player, true);
+	sphere9->body->Push(0.0f, 0.0f, 100000.0f);
+	sphere9->color = { 1,0,0,1 };
+
+	// 51
+	Sphere* sphere10 = new Sphere(1);
+	sphere10->SetPos(70, 20, -100);
+	primitives.PushBack(sphere10);
+	App->physics->AddBody(*sphere10, 0.0f);
+
+	// 52
+	Sphere* sphere11 = new Sphere(1.5);
+	sphere11->SetPos(70, 15, -100);
+	primitives.PushBack(sphere11);
+	App->physics->AddBody(*sphere11, 10.0f, ElementType::DAMAGE, App->player, true);
+	sphere11->body->Push(0.0f, 0.0f, -100000.0f);
+	sphere11->color = { 1,0,0,1 };
+
+	// 53
+	Sphere* sphere12 = new Sphere(1);
+	sphere12->SetPos(50, 20, -100);
+	primitives.PushBack(sphere12);
+	App->physics->AddBody(*sphere12, 0.0f);
+
+	// 54
+	Sphere* sphere13 = new Sphere(1.5);
+	sphere13->SetPos(50, 15, -100);
+	primitives.PushBack(sphere13);
+	App->physics->AddBody(*sphere13, 10.0f, ElementType::DAMAGE, App->player, true);
+	sphere13->body->Push(0.0f, 0.0f, 100000.0f);
+	sphere13->color = { 1,0,0,1 };
+
+	// Adding constraints
+	App->physics->AddConstraintP2P(*sphere5->body, *sphere6->body, vec3{ 0.0f, 0.0f, 0.0f }, vec3{ sphere5->transform.translation().x - sphere6->transform.translation().x, sphere5->transform.translation().y - sphere6->transform.translation().y, sphere5->transform.translation().z - sphere6->transform.translation().z });
+	App->physics->AddConstraintP2P(*sphere8->body, *sphere9->body, vec3{ 0.0f, 0.0f, 0.0f }, vec3{ sphere8->transform.translation().x - sphere9->transform.translation().x, sphere8->transform.translation().y - sphere9->transform.translation().y, sphere8->transform.translation().z - sphere9->transform.translation().z });
+	App->physics->AddConstraintP2P(*sphere10->body, *sphere11->body, vec3{ 0.0f, 0.0f, 0.0f }, vec3{ sphere10->transform.translation().x - sphere11->transform.translation().x, sphere10->transform.translation().y - sphere11->transform.translation().y, sphere10->transform.translation().z - sphere11->transform.translation().z });
+	App->physics->AddConstraintP2P(*sphere12->body, *sphere13->body, vec3{ 0.0f, 0.0f, 0.0f }, vec3{ sphere12->transform.translation().x - sphere13->transform.translation().x, sphere12->transform.translation().y - sphere13->transform.translation().y, sphere12->transform.translation().z - sphere13->transform.translation().z });
 	
 }
 
