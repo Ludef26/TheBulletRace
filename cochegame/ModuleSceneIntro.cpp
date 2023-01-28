@@ -78,9 +78,10 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	//---------------------COLISION HIELO------------
 	if (body1->type == ElementType::ICE && body1->isSensor)
 	{
-		App->player->vehicle->vehicle->updateFriction(btScalar(20.0f));
-		//App->player->vehicle->info.frictionSlip = 0.0f;
+		hielo = !hielo;
+		App->player->cueficienteFriccion = 0.01f;
 		LOG("ESTA SOBRE HIELO");
+		
 	}
 
 	//---------------------COLISION GRAVEDAD------------
@@ -364,7 +365,7 @@ void ModuleSceneIntro::CreateCircuit()
 	
 	
 	//---------------------HIELO
-	Cube* Hielo1 = new Cube(20, 2, 40);
+	Cube* Hielo1 = new Cube(1, 2, 40);
 	Hielo1->SetPos(0, 12, 80);
 	Hielo1->wire = true;
 	primitives.PushBack(Hielo1);

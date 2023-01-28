@@ -11,6 +11,7 @@
 
 struct PhysVehicle3D;
 
+
 #define MAX_ACCELERATION 1200.0f
 #define TURN_DEGREES 15.0f * DEGTORAD
 #define BRAKE_POWER 500.0f
@@ -46,11 +47,24 @@ public:
 	void DrawTextHUD(float x, float y, float z, const char* text, int color);
 
 public:
-	float masa=300.0f;
+	bool ganar = false;
+	bool perder = false;
+
+	bool quitarFisicas = false;
+
+	char hud[80];
+
+	float masa;
+
 	PhysVehicle3D* vehicle;
 	float turn;
 	float acceleration;
 	float brake;
+
+	//friccion
+	float fuerzaFriccion;
+	float cueficienteFriccion;
+	float normal;
 
 	btTransform carPos;
 	vec3 initialCarPos = { 0,0,0 };

@@ -4,7 +4,6 @@
 #include "Primitive.h"
 #include "PhysVehicle3D.h"
 #include "PhysBody3D.h"
-
 ModulePlayer::ModulePlayer(Application* app, bool start_enabled) : Module(app, start_enabled), vehicle(NULL)
 {
 	turn = acceleration = brake = 0.0f;
@@ -24,10 +23,11 @@ bool ModulePlayer::Start()
 	LOG("Loading player");
 	VehicleInfo car;
 
+	
 	// Car properties ----------------------------------------
 	car.chassis_size.Set(3.5, 1.5, 4);
 	car.chassis_offset.Set(0, 1.5, 0);
-	car.mass = masa;
+	car.mass = 300.0f;
 	car.suspensionStiffness = 15.88f;
 	car.suspensionCompression = 0.83f;
 	car.suspensionDamping = 0.88f;
@@ -126,7 +126,7 @@ bool ModulePlayer::CleanUp()
 update_status ModulePlayer::Update(float dt)
 {
 	turn = acceleration = brake = 0.0f;
-
+	// ______________________________________________DEBUG KEYS_________________________________________
 	//CHECK POINTS
 	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
 	{
@@ -149,83 +149,175 @@ update_status ModulePlayer::Update(float dt)
 		App->scene_intro->checkpoint = 4;
 	}
 	
-
-
-	//---------------------------------------------------
-	//--------------------------------CONTROLES JUGADOR
-	if (App->camera->freeCamera == false)
+	//-------------------------CAMBIAR MASA COCHE----------------------
+	//-------Mas masa
+	if (App->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN)
 	{
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		App->player->vehicle->info.mass += 100.f;
+	}
+	//-------------------Menos masa
+	if (App->input->GetKey(SDL_SCANCODE_0) == KEY_DOWN)
 	{
-		acceleration = MAX_ACCELERATION;
+		App->player->vehicle->info.mass -= 100.f;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	//-----------------------------------------------
+	 
+	//---------------------------CONDICIONES---------------------------
+	//-------boton ganar
+	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
 	{
-		if (turn < TURN_DEGREES)
-			turn += TURN_DEGREES;
-	}
+		ganar = true;
+		perder = false;
 
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	}
+	if (ganar && !perder)
 	{
-		acceleration = -MAX_ACCELERATION;
+		App->camera->Position.x = 10;
+		App->camera->Position.y = 50;
+		App->camera->Position.z = -205;
+		sprintf_s(hud, "GANASTE");
+		DrawTextHUD(10, 50, -200, hud, 2);
+		
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	//-------boton perder
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
-		if (turn > -TURN_DEGREES)
-			turn -= TURN_DEGREES;
+		perder = true;
+		ganar = false;
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (perder && !ganar)
 	{
-		if (vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY())
-			vehicle->Jump(50000.0f);
-
-		jumpCooldown.Start();
+		App->camera->Position.x = 10;
+		App->camera->Position.y = 50;
+		App->camera->Position.z = -205;
+		sprintf_s(hud, "PERDISTE");
+		DrawTextHUD(10, 50, -200, hud, 2);
+		
 	}
+	//-----------------------------------------------
+	
+	//-----------------------------QUITAR FUERZAS COCHE----------------------
 
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT )
+	if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
 	{
-		vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ 0.0f, 10.0f, 0.0f });
+
+		quitarFisicas = !quitarFisicas;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT )
+	if (quitarFisicas) 
 	{
-		vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ 0.0f, -10.0f, 0.0f });
+		App->player->cueficienteFriccion = 0;
+		App->physics->world->setGravity(btVector3(0.0f, 0.0f, 0.0f));
 	}
+	//-----------------------------------------------
 
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	{
-		brake = BRAKE_POWER;
-	}
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
-	{
-		vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ -500.0f * vehicle->vehicle->getForwardVector().getX(), -500.0f * vehicle->vehicle->getForwardVector().getY(), -500.0f * vehicle->vehicle->getForwardVector().getZ() });
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
-	{
-		vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ 500.0f * vehicle->vehicle->getForwardVector().getX(), 500.0f * vehicle->vehicle->getForwardVector().getY(), 500.0f * vehicle->vehicle->getForwardVector().getZ() });
-	}
-	}
-
-	// DEBUG KEYS
+	//Volver a el ultimo checkpoint
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 		ResetPosition();
 
+	//Hacer Reset al juego
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 	{
 		currentHUD = HUDStatus::START;
 		ResetLevel();
 	}
 
-	if (minutesPassed == 4)
+	//---------------------------------------------------
+	//--------------------------------CONTROLES JUGADOR
+	if (App->camera->freeCamera == false && ganar == false && perder == false)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		{
+			acceleration = MAX_ACCELERATION;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		{
+			if (turn < TURN_DEGREES)
+				turn += TURN_DEGREES;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+			acceleration = -MAX_ACCELERATION;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		{
+			if (turn > -TURN_DEGREES)
+				turn -= TURN_DEGREES;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			if (vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY())
+				vehicle->Jump(50000.0f);
+
+			jumpCooldown.Start();
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT )
+		{
+			vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ 0.0f, 10.0f, 0.0f });
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT )
+		{
+			vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ 0.0f, -10.0f, 0.0f });
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+		{
+			brake = BRAKE_POWER;
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+		{
+			vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ -500.0f * vehicle->vehicle->getForwardVector().getX(), -500.0f * vehicle->vehicle->getForwardVector().getY(), -500.0f * vehicle->vehicle->getForwardVector().getZ() });
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+		{
+			vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ 500.0f * vehicle->vehicle->getForwardVector().getX(), 500.0f * vehicle->vehicle->getForwardVector().getY(), 500.0f * vehicle->vehicle->getForwardVector().getZ() });
+		}
+	}
+
+	
+
+	/*
+	* if (minutesPassed == 4)
 	{
 		currentHUD = HUDStatus::GAME_OVER;
 		ResetLevel();
 	}
+	*/
+	
+	//---------------------------- FRICCION COCHE
+	normal = App->player->vehicle->info.mass * 10.0f;
+
+	if (App->scene_intro->hielo == false) {
+
+	cueficienteFriccion = 0.2f;
+	}
+	if (App->scene_intro->hielo == true) {
+		vehicle->info.frictionSlip = 0.1f;
+	}
+
+	fuerzaFriccion = normal * cueficienteFriccion;
+
+
+	if (App->player->vehicle->GetKmh() > 0) {
+		acceleration -= fuerzaFriccion;
+	}
+
+
+	if (App->player->vehicle->GetKmh() < 0) {
+		acceleration += fuerzaFriccion;
+	}
+
+	//----------------------------------------------
 	vehicle->ApplyEngineForce(acceleration);
 	
 	vehicle->Turn(turn);
@@ -236,7 +328,6 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Render();
 
 
-	char hud[80];
 
 	/*
 	* if (secondsPassed > 49)
@@ -248,6 +339,15 @@ update_status ModulePlayer::Update(float dt)
 		sprintf_s(hud, "TIME REMAINING --- 0%d:%d", (3 - minutesPassed), (59 - secondsPassed));
 	}
 	*/
+	sprintf_s(hud, "FRICCION --- %.0f", App->player->vehicle->info.frictionSlip);
+
+	DrawTextHUD(
+		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 2.5f,
+		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY() + 5.0f,
+		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(),
+		hud, 1
+	);
+
 
 	sprintf_s(hud, "Velocidad --- %.0f", App->player->vehicle->GetKmh());
 
@@ -259,7 +359,8 @@ update_status ModulePlayer::Update(float dt)
 	);
 
 
-	sprintf_s(hud, "Masa Coche --- %.0f", masa);
+
+	sprintf_s(hud, "Masa Coche --- %.0f", App->player->vehicle->info.mass);
 
 	DrawTextHUD(
 		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 2.5f,
@@ -324,7 +425,7 @@ update_status ModulePlayer::Update(float dt)
 
 void ModulePlayer::CameraFollow()
 {
-	if (App->camera->freeCamera == false) 
+	if (App->camera->freeCamera == false && ganar == false && perder == false)
 	{
 		carPos = vehicle->vehicle->getChassisWorldTransform();
 		initialCarPos = { carPos.getOrigin().getX(),carPos.getOrigin().getY(),carPos.getOrigin().getZ() };

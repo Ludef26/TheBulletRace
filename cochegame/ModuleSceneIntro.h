@@ -27,6 +27,7 @@ public:
 
 public:
 
+	bool hielo = false;
 	/*
 	PhysBody3D* pb_snake[MAX_SNAKE];
 	Sphere s_snake[MAX_SNAKE];
