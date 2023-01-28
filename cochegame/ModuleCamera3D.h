@@ -23,7 +23,7 @@ private:
 	void CalculateViewMatrix();
 
 public:
-
+	bool freeCamera;
 	vec3 X, Y, Z, Position, Reference;
 
 private:

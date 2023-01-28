@@ -32,7 +32,7 @@ bool ModulePlayer::Start()
 	car.suspensionCompression = 0.83f;
 	car.suspensionDamping = 0.88f;
 	car.maxSuspensionTravelCm = 1000.0f;
-	car.frictionSlip = 50.5;
+	car.frictionSlip = 10.5;
 	car.maxSuspensionForce = 6000.0f;
 
 	// Wheel properties ---------------------------------------
@@ -153,6 +153,8 @@ update_status ModulePlayer::Update(float dt)
 
 	//---------------------------------------------------
 	//--------------------------------CONTROLES JUGADOR
+	if (App->camera->freeCamera == false)
+	{
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		acceleration = MAX_ACCELERATION;
@@ -207,6 +209,7 @@ update_status ModulePlayer::Update(float dt)
 	{
 		vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ 500.0f * vehicle->vehicle->getForwardVector().getX(), 500.0f * vehicle->vehicle->getForwardVector().getY(), 500.0f * vehicle->vehicle->getForwardVector().getZ() });
 	}
+	}
 
 	// DEBUG KEYS
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
@@ -225,6 +228,7 @@ update_status ModulePlayer::Update(float dt)
 	}
 
 	vehicle->ApplyEngineForce(acceleration);
+	
 	vehicle->Turn(turn);
 	vehicle->Brake(brake);
 
@@ -264,6 +268,19 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(),
 		hud,2
 	);
+
+	
+	sprintf_s(hud, "CHECKPOINT 1");
+    DrawTextHUD(0,10,0,hud, 2);
+
+	sprintf_s(hud, "CHECKPOINT 2");
+	DrawTextHUD(45, 60, 80, hud, 2);
+
+	sprintf_s(hud, "CHECKPOINT 3");
+	DrawTextHUD(280, 60, 80, hud, 2);
+
+
+
 	switch (currentHUD)
 	{
 	case(HUDStatus::START):
@@ -306,12 +323,16 @@ update_status ModulePlayer::Update(float dt)
 
 void ModulePlayer::CameraFollow()
 {
-	carPos = vehicle->vehicle->getChassisWorldTransform();
-	initialCarPos = { carPos.getOrigin().getX(),carPos.getOrigin().getY(),carPos.getOrigin().getZ() };
-	carDir = { carPos.getBasis().getColumn(2).getX(),carPos.getBasis().getColumn(2).getY(),carPos.getBasis().getColumn(2).getZ() };
-	App->camera->Position = cameraPos;
-	cameraPos = initialCarPos - 15 * carDir;
-	App->camera->Position.y = initialCarPos.y + 5;
+	if (App->camera->freeCamera == false) 
+	{
+		carPos = vehicle->vehicle->getChassisWorldTransform();
+		initialCarPos = { carPos.getOrigin().getX(),carPos.getOrigin().getY(),carPos.getOrigin().getZ() };
+		carDir = { carPos.getBasis().getColumn(2).getX(),carPos.getBasis().getColumn(2).getY(),carPos.getBasis().getColumn(2).getZ() };
+		App->camera->Position = cameraPos;
+		cameraPos = initialCarPos - 15 * carDir;
+		App->camera->Position.y = initialCarPos.y + 5;
+	}
+	
 }
 
 void ModulePlayer::ResetPosition()
@@ -375,6 +396,7 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	if (body2->type == ElementType::DAMAGE)
 	{
 		ResetPosition();
+		
 	}
 
 	if (body2->type == ElementType::ICE)

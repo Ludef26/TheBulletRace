@@ -67,7 +67,7 @@ update_status ModuleSceneIntro::PostUpdate(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-
+	//---------------------COLISION TRAMPOLIN------------
 	if (body1->type == ElementType::TRAMPOLIN && body1->isSensor)
 	{
 		
@@ -75,13 +75,15 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		LOG("TRAMPOLIN");
 	}
 
-
+	//---------------------COLISION HIELO------------
 	if (body1->type == ElementType::ICE && body1->isSensor)
 	{
 		
+		//App->player->vehicle->info.frictionSlip = 0.0f;
 		LOG("ESTA SOBRE HIELO");
 	}
 
+	//---------------------COLISION GRAVEDAD------------
 	if (body1->type == ElementType::GRAVEDAD_INV && body1->isSensor)
 	{
 		App->camera->Position.z = 200;
@@ -96,10 +98,13 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 	if (body1->type == ElementType::TUBE_SENSOR && body1->isSensor)
 	{
-		primitives[16]->wire = true;
+		/*
+		* 	primitives[16]->wire = true;
 		primitives[17]->wire = true;
 		primitives[18]->wire = true;
 		primitives[19]->wire = true;
+		*/
+	
 	}
 	else if (body1->type == ElementType::SPAWN_SENSOR_RAMP && body1->isSensor )
 	{
@@ -153,7 +158,8 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	}
 	if (body1->type == ElementType::FINISH && body1->isSensor && checkpoint == 4)
 	{
-		App->player->minutesPassed = 0;
+		/*
+		* App->player->minutesPassed = 0;
 		App->player->secondsPassed = 0;
 		App->player->lapTimer.Start();
 		checkpoint = 0;
@@ -166,6 +172,8 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		primitives[17]->wire = false;
 		primitives[18]->wire = false;
 		primitives[19]->wire = false;
+		*/
+		
 	}
 	if (body1->type == ElementType::CHECKPOINT && body1->isSensor && checkpoint == 0)
 	{
@@ -209,6 +217,7 @@ void ModuleSceneIntro::CreateCircuit()
 	//-----------------------------------------------------
 	
 	//-----------------------------checkpoints
+
 	Cube* checkpoint = new Cube(10, 10, 10);
 	checkpoint->SetPos(0, 10, 0);
 	primitives.PushBack(checkpoint);
@@ -226,7 +235,7 @@ void ModuleSceneIntro::CreateCircuit()
 	Cube* checkpoint3 = new Cube(30, 10, 40);
 	checkpoint3->SetPos(280, 60, 80);
 	primitives.PushBack(checkpoint3);
-	App->physics->AddBody(*checkpoint3, 0.0f, ElementType::CHECKPOINT2, this, true);
+	App->physics->AddBody(*checkpoint3, 0.0f, ElementType::CHECKPOINT3, this, true);
 	checkpoint3->wire = true;
 
 	//------------------------- CIELO
@@ -292,7 +301,7 @@ void ModuleSceneIntro::CreateCircuit()
 	App->physics->AddBody(*Suelo3, 0.0f);
 
 
-	//TRMAPOLIN
+	//---------------------------------------------TRAMAPOLIN
 	Cube* Trampolin1 = new Cube(40, 10, 40);
 	Trampolin1->SetPos(200, 6, 80);
 	Trampolin1->wire = true;
@@ -306,16 +315,6 @@ void ModuleSceneIntro::CreateCircuit()
 	primitives.PushBack(Pared1);
 	App->physics->AddBody(*Pared1, 0.0f);
 
-	
-	//---------------------HIELO
-	Cube* Hielo1 = new Cube(20, 2, 40);
-	Hielo1->SetPos(0, 12, 80);
-	Hielo1->wire = true;
-	primitives.PushBack(Hielo1);
-	App->physics->AddBody(*Hielo1, 0.0f, ElementType::ICE, this, true);
-	Hielo1->color = { 0,0,1,97 };
-
-	
 	//-------------------------------------------------
 
 	//---------------------AGUA
@@ -364,7 +363,14 @@ void ModuleSceneIntro::CreateCircuit()
 	
 	
 	
-	
+	//---------------------HIELO
+	Cube* Hielo1 = new Cube(20, 2, 40);
+	Hielo1->SetPos(0, 12, 80);
+	Hielo1->wire = true;
+	primitives.PushBack(Hielo1);
+	App->physics->AddBody(*Hielo1, 0.0f, ElementType::ICE, this, true);
+	Hielo1->color = { 0,0,1,97 };
+
 
 	
 }
