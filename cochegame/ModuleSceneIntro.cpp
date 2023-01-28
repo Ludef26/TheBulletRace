@@ -78,7 +78,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	//---------------------COLISION HIELO------------
 	if (body1->type == ElementType::ICE && body1->isSensor)
 	{
-		
+		App->player->vehicle->vehicle->updateFriction(btScalar(20.0f));
 		//App->player->vehicle->info.frictionSlip = 0.0f;
 		LOG("ESTA SOBRE HIELO");
 	}

@@ -226,7 +226,6 @@ update_status ModulePlayer::Update(float dt)
 		currentHUD = HUDStatus::GAME_OVER;
 		ResetLevel();
 	}
-
 	vehicle->ApplyEngineForce(acceleration);
 	
 	vehicle->Turn(turn);
@@ -317,6 +316,8 @@ update_status ModulePlayer::Update(float dt)
 		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(),
 		hud, 1
 	);
+
+	
 
 	return UPDATE_CONTINUE;
 }
