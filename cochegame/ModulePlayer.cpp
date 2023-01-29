@@ -180,7 +180,10 @@ update_status ModulePlayer::Update(float dt)
 		App->camera->Position.y = 50;
 		App->camera->Position.z = -205;
 		sprintf_s(hud, "GANASTE");
-		DrawTextHUD(10, 50, -200, hud, 2);
+		DrawTextHUD(10, 50, -200, hud, 1);
+
+		sprintf_s(hud, "R to Restart");
+		DrawTextHUD(10, 49, -200, hud, 2);
 		
 	}
 	//-------boton perder
@@ -196,6 +199,9 @@ update_status ModulePlayer::Update(float dt)
 		App->camera->Position.z = -205;
 		sprintf_s(hud, "PERDISTE");
 		DrawTextHUD(10, 50, -200, hud, 2);
+
+		sprintf_s(hud, "R to Restart");
+		DrawTextHUD(10, 49, -200, hud, 2);
 		
 	}
 	//-----------------------------------------------
@@ -219,18 +225,6 @@ update_status ModulePlayer::Update(float dt)
 
 	}
 
-	//-----------------------------------------------
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
-	{
-		 
-
-	}
-	
-	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
-	{
-		
-
-	}
 
 	//Volver a el ultimo checkpoint
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
@@ -398,7 +392,7 @@ update_status ModulePlayer::Update(float dt)
 
 
 	}
-	sprintf_s(hud, "DANYO %d / 15",danioCoche);
+	sprintf_s(hud, "DAMAGE %d / 15",danioCoche);
 	DrawTextHUD(vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 2.5f,
 		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY() + 2.5f,
 		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(),
