@@ -56,6 +56,10 @@ public:
 	char hud[80];
 
 	float masa;
+	float daniarCoche = false;
+	int danioCoche = 15;
+
+	
 
 	PhysVehicle3D* vehicle;
 	float turn;

@@ -102,7 +102,7 @@ bool ModulePlayer::Start()
 
 	vehicle = App->physics->AddVehicle(car);
 
-	vehicle->SetPos(0.0f, 10.0f, 5.0f);
+	vehicle->SetPos(0.0f, 10.0f, -30.0f);
 
 	vehicle->collision_listeners.add(this);
 
@@ -210,7 +210,7 @@ update_status ModulePlayer::Update(float dt)
 
 	if (quitarFisicas) 
 	{
-		
+		App->physics->world->setGravity(btVector3(0.0f, 0.0f, 0.0f));
 	}
 	//-----------------------------------------------
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
@@ -333,6 +333,9 @@ update_status ModulePlayer::Update(float dt)
 
 	vehicle->Render();
 
+	if (danioCoche <= 0) {
+		perder = true;
+	}
 
 	//-----------------------------------------------HUD
 	if (mostrarDatos == true) 
@@ -397,6 +400,12 @@ update_status ModulePlayer::Update(float dt)
 
 
 	}
+	sprintf_s(hud, "DANYO %d / 15",danioCoche);
+	DrawTextHUD(vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 2.5f,
+		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY() + 2.5f,
+		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(),
+		hud, 1);
+
 	sprintf_s(hud, "CHECKPOINT 1");
 	DrawTextHUD(0, 10, 0, hud, 2);
 
@@ -413,6 +422,10 @@ update_status ModulePlayer::Update(float dt)
 	DrawTextHUD(0, 40, -100, hud, 2);
 
 	
+	if (daniarCoche == true) {
+		danioCoche--;
+		daniarCoche = false;
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -433,6 +446,8 @@ void ModulePlayer::CameraFollow()
 
 void ModulePlayer::ResetPosition()
 {
+
+	daniarCoche = true;
 	if (App->scene_intro->checkpoint == 0)
 	{
 		vehicle->SetTransform(initialTransf);
@@ -491,8 +506,9 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 	if (body2->type == ElementType::DAMAGE)
 	{
+		daniarCoche = true;
 		ResetPosition();
-		
+
 	}
 
 }
@@ -522,14 +538,12 @@ void ModulePlayer::ResetLevel()
 
 	ganar = false;
 	perder = false;
-	minutesPassed = 0;
-	secondsPassed = 0;
-	lapTimer.Start();
+	danioCoche = 16;
+
 
 	App->scene_intro->checkpoint = 0;
 
 	ResetPosition();
-
 	//App->scene_intro->spawnedBalls1 = false;
 	//App->scene_intro->spawnedBalls2 = false;
 

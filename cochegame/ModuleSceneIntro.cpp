@@ -324,7 +324,7 @@ void ModuleSceneIntro::CreateCircuit()
 	esferaTiradora1->SetPos(160, 30, 80);
 	primitives.PushBack(esferaTiradora1);
 	App->physics->AddBody(*esferaTiradora1, 1000000.0f);
-	esferaTiradora1->body->Push(0.0f, 0.0f, 25000000.0f);
+	esferaTiradora1->body->Push(0.0f, 0.0f, 100000000.0f);
 	esferaTiradora1->color = { 1,1,0,1 };
 
 	App->physics->AddConstraintP2P(*esferaBase1->body, *esferaTiradora1->body, vec3{ 0.0f, 0.0f, 0.0f }, vec3{ esferaBase1->transform.translation().x - esferaTiradora1->transform.translation().x, esferaBase1->transform.translation().y - esferaTiradora1->transform.translation().y, esferaBase1->transform.translation().z - esferaTiradora1->transform.translation().z });
@@ -332,7 +332,7 @@ void ModuleSceneIntro::CreateCircuit()
 	//---------------------------------------------TRAMAPOLIN
 	Cube* Trampolin1 = new Cube(40, 10, 40);
 	Trampolin1->SetPos(200, 6, 80);
-	Trampolin1->wire = true;
+
 	primitives.PushBack(Trampolin1);
 	App->physics->AddBody(*Trampolin1, 0.0f, ElementType::TRAMPOLIN, this, true);
 	Trampolin1->color = { 0,0,1,97 };
@@ -428,7 +428,7 @@ void ModuleSceneIntro::CreateCircuit()
 	esferaAsesina1->SetPos(90, 30, -100);
 	primitives.PushBack(esferaAsesina1);
 	App->physics->AddBody(*esferaAsesina1, 10.0f, ElementType::DAMAGE, App->player, true);
-	esferaAsesina1->body->Push(0.0f, 0.0f, 100000.0f);
+	esferaAsesina1->body->Push(0.0f, 0.0f, 50.0f);
 	esferaAsesina1->color = { 1,0,0,1 };
 
 	App->physics->AddConstraintP2P(*esferaBase2->body, *esferaAsesina1->body, vec3{ 0.0f, 0.0f, 0.0f }, vec3{ esferaBase2->transform.translation().x - esferaAsesina1->transform.translation().x, esferaBase2->transform.translation().y - esferaAsesina1->transform.translation().y, esferaBase2->transform.translation().z - esferaAsesina1->transform.translation().z });
@@ -444,7 +444,7 @@ void ModuleSceneIntro::CreateCircuit()
 	esferaAsesina2->SetPos(60, 35, -100);
 	primitives.PushBack(esferaAsesina2);
 	App->physics->AddBody(*esferaAsesina2, 10.0f, ElementType::DAMAGE, App->player, true);
-	esferaAsesina2->body->Push(0.0f, 0.0f, -100000.0f);
+	esferaAsesina2->body->Push(0.0f, 0.0f, 40.0f);
 	esferaAsesina2->color = { 1,0,0,1 };
 
 	App->physics->AddConstraintP2P(*esferaBase3->body, *esferaAsesina2->body, vec3{ 0.0f, 0.0f, 0.0f }, vec3{ esferaBase3->transform.translation().x - esferaAsesina2->transform.translation().x, esferaBase3->transform.translation().y - esferaAsesina2->transform.translation().y, esferaBase3->transform.translation().z - esferaAsesina2->transform.translation().z });
@@ -460,7 +460,7 @@ void ModuleSceneIntro::CreateCircuit()
 	esferaAsesina3->SetPos(30, 40, -100);
 	primitives.PushBack(esferaAsesina3);
 	App->physics->AddBody(*esferaAsesina3, 10.0f, ElementType::DAMAGE, App->player, true);
-	esferaAsesina3->body->Push(0.0f, 0.0f, 100000.0f);
+	esferaAsesina3->body->Push(0.0f, 0.0f, 50.0f);
 	esferaAsesina3->color = { 1,0,0,1 };
 
 	App->physics->AddConstraintP2P(*esferaBase4->body, *esferaAsesina3->body, vec3{ 0.0f, 0.0f, 0.0f }, vec3{ esferaBase4->transform.translation().x - esferaAsesina3->transform.translation().x, esferaBase4->transform.translation().y - esferaAsesina3->transform.translation().y, esferaBase4->transform.translation().z - esferaAsesina3->transform.translation().z });
@@ -476,7 +476,7 @@ void ModuleSceneIntro::CreateCircuit()
 	esferaAsesina4->SetPos(120, 30, -100);
 	primitives.PushBack(esferaAsesina4);
 	App->physics->AddBody(*esferaAsesina4, 10.0f, ElementType::DAMAGE, App->player, true);
-	esferaAsesina4->body->Push(0.0f, 0.0f, 100000.0f);
+	esferaAsesina4->body->Push(0.0f, 0.0f, 70.0f);
 	esferaAsesina4->color = { 1,0,0,1 };
 
 	App->physics->AddConstraintP2P(*esferaBase5->body, *esferaAsesina4->body, vec3{ 0.0f, 0.0f, 0.0f }, vec3{ esferaBase5->transform.translation().x - esferaAsesina4->transform.translation().x, esferaBase5->transform.translation().y - esferaAsesina4->transform.translation().y, esferaBase5->transform.translation().z - esferaAsesina4->transform.translation().z });
@@ -494,7 +494,7 @@ void ModuleSceneIntro::CreateCircuit()
 	esferaTiradora2->SetPos(200, 25, -100);
 	primitives.PushBack(esferaTiradora2);
 	App->physics->AddBody(*esferaTiradora2, 1000000.0f);
-	esferaTiradora2->body->Push(0.0f, 0.0f, 25000000.0f);
+	esferaTiradora2->body->Push(0.0f, 0.0f, 100000000.0f);
 	esferaTiradora2->color = { 1,1,0,1 };
 
 	App->physics->AddConstraintP2P(*esferaBase20->body, *esferaTiradora2->body, vec3{ 0.0f, 0.0f, 0.0f }, vec3{ esferaBase20->transform.translation().x - esferaTiradora2->transform.translation().x, esferaBase20->transform.translation().y - esferaTiradora2->transform.translation().y, esferaBase20->transform.translation().z - esferaTiradora2->transform.translation().z });
