@@ -219,12 +219,25 @@ update_status ModulePlayer::Update(float dt)
 
 	}
 
+	//-----------------------------------------------
+	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+	{
+		 
+
+	}
+	
+	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
+	{
+		
+
+	}
+
 	//Volver a el ultimo checkpoint
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 		ResetPosition();
 
 	//Hacer Reset al juego
-	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 	{
 		currentHUD = HUDStatus::START;
 		ResetLevel();
@@ -256,13 +269,13 @@ update_status ModulePlayer::Update(float dt)
 				turn -= TURN_DEGREES;
 		}
 
-		if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		/*if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
 			if (vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY())
 				vehicle->Jump(50000.0f);
 
 			jumpCooldown.Start();
-		}
+		}*/
 
 		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT )
 		{
@@ -272,21 +285,6 @@ update_status ModulePlayer::Update(float dt)
 		if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT )
 		{
 			vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ 0.0f, -10.0f, 0.0f });
-		}
-
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		{
-			brake = BRAKE_POWER;
-		}
-
-		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
-		{
-			vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ -500.0f * vehicle->vehicle->getForwardVector().getX(), -500.0f * vehicle->vehicle->getForwardVector().getY(), -500.0f * vehicle->vehicle->getForwardVector().getZ() });
-		}
-
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
-		{
-			vehicle->vehicle->getRigidBody()->applyTorqueImpulse({ 500.0f * vehicle->vehicle->getForwardVector().getX(), 500.0f * vehicle->vehicle->getForwardVector().getY(), 500.0f * vehicle->vehicle->getForwardVector().getZ() });
 		}
 	}
 
