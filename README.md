@@ -28,10 +28,6 @@ F - Free physics
  
 3 - Go to checkpoint 3
 
-4 - Add 1 value to gravity
-
-5 - Remove 1 value to gravity
-
 9 - Add 100kg to the car 
 
 0 - Remove 100kg to the car
