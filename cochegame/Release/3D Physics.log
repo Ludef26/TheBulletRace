@@ -1,0 +1,39 @@
+﻿  Application.cpp
+C:\Users\Casa\Documents\GitHub\TheBulletRace\cochegame\Application.cpp(12,33): warning C4316: 'ModulePlayer': puede que el objeto asignado en el montón no esté alineado 16
+  Color.cpp
+  glmath.cpp
+C:\Users\Casa\Documents\GitHub\TheBulletRace\cochegame\glmath.cpp(12,13): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\Casa\Documents\GitHub\TheBulletRace\cochegame\glmath.cpp(27,17): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\Casa\Documents\GitHub\TheBulletRace\cochegame\glmath.cpp(43,34): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\Casa\Documents\GitHub\TheBulletRace\cochegame\glmath.cpp(53,10): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\Casa\Documents\GitHub\TheBulletRace\cochegame\glmath.cpp(53,26): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\Casa\Documents\GitHub\TheBulletRace\cochegame\glmath.cpp(72,13): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\Casa\Documents\GitHub\TheBulletRace\cochegame\glmath.cpp(87,17): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\Casa\Documents\GitHub\TheBulletRace\cochegame\glmath.cpp(103,34): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\Casa\Documents\GitHub\TheBulletRace\cochegame\glmath.cpp(600,13): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\Casa\Documents\GitHub\TheBulletRace\cochegame\glmath.cpp(618,10): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\Casa\Documents\GitHub\TheBulletRace\cochegame\glmath.cpp(618,33): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\Casa\Documents\GitHub\TheBulletRace\cochegame\glmath.cpp(758,13): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\Casa\Documents\GitHub\TheBulletRace\cochegame\glmath.cpp(778,10): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+C:\Users\Casa\Documents\GitHub\TheBulletRace\cochegame\glmath.cpp(778,33): warning C4244: 'inicializando': conversión de 'double' a 'float'; posible pérdida de datos
+  Light.cpp
+  log.cpp
+  Main.cpp
+  ModuleAudio.cpp
+  ModuleCamera3D.cpp
+  ModuleInput.cpp
+  ModulePhysics3D.cpp
+  ModulePlayer.cpp
+C:\Users\Casa\Documents\GitHub\TheBulletRace\cochegame\ModulePlayer.cpp(417,6): warning C4805: '==': combinación no segura del tipo 'float' y el tipo 'bool' en la operación
+  ModuleRenderer3D.cpp
+  ModuleSceneIntro.cpp
+  ModuleWindow.cpp
+  PhysBody3D.cpp
+  PhysVehicle3D.cpp
+  Primitive.cpp
+  Timer.cpp
+  Generando código
+  Previous IPDB not found, fall back to full compilation.
+  All 448 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Generación de código finalizada
+  3D Physics.vcxproj -> C:\Users\Casa\Documents\GitHub\TheBulletRace\cochegame\Release\3D Physics - class5.exe
