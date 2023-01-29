@@ -1,4 +1,4 @@
-# TheBulletRace
+# RaceCar
 
 Welcome to our project in Bullet3D, the objective of this game is to reach the finish line without losing all the life of the car. To reach the goal we will have to go through different obstacles, such as changes in gravity, big jumps and a ramp full of dangers.
 
