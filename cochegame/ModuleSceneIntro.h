@@ -28,6 +28,7 @@ public:
 public:
 
 	bool hielo = false;
+	bool gravedad;
 	/*
 	PhysBody3D* pb_snake[MAX_SNAKE];
 	Sphere s_snake[MAX_SNAKE];
@@ -50,6 +51,7 @@ public:
 	
 	p2DynArray<Primitive*> primitives;
 	Cube* frontWall;
+
 
 	int checkpoint = 0;
 };

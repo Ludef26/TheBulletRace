@@ -51,6 +51,7 @@ public:
 	bool perder = false;
 
 	bool quitarFisicas = false;
+	bool mostrarDatos = false;
 
 	char hud[80];
 

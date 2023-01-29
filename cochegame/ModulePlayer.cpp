@@ -125,6 +125,8 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
+
+
 	turn = acceleration = brake = 0.0f;
 	// ______________________________________________DEBUG KEYS_________________________________________
 	//CHECK POINTS
@@ -162,7 +164,8 @@ update_status ModulePlayer::Update(float dt)
 	}
 
 	//-----------------------------------------------
-	 
+
+
 	//---------------------------CONDICIONES---------------------------
 	//-------boton ganar
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
@@ -207,11 +210,14 @@ update_status ModulePlayer::Update(float dt)
 
 	if (quitarFisicas) 
 	{
-		App->player->cueficienteFriccion = 0;
-		App->physics->world->setGravity(btVector3(0.0f, 0.0f, 0.0f));
+		
 	}
 	//-----------------------------------------------
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		mostrarDatos = !mostrarDatos;
 
+	}
 
 	//Volver a el ultimo checkpoint
 	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
@@ -328,50 +334,71 @@ update_status ModulePlayer::Update(float dt)
 	vehicle->Render();
 
 
-
-	/*
-	* if (secondsPassed > 49)
+	//-----------------------------------------------HUD
+	if (mostrarDatos == true) 
 	{
-		sprintf_s(hud, "TIME REMAINING --- 0%d:0%d", (3 - minutesPassed), (59 - secondsPassed));
+		sprintf_s(hud, "FRICCION --- %.2f", App->player->cueficienteFriccion);
+
+		DrawTextHUD(
+			vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 2.5f,
+			vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY() + 5.0f,
+			vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(),
+			hud, 1
+		);
+
+
+		sprintf_s(hud, "Velocidad --- %.0f", App->player->vehicle->GetKmh());
+
+		DrawTextHUD(
+			vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 2.5f,
+			vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY() + 7.0f,
+			vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(),
+			hud, 1
+		);
+
+
+
+		sprintf_s(hud, "Masa Coche --- %.0f", App->player->vehicle->info.mass);
+
+		DrawTextHUD(
+			vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 2.5f,
+			vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY() + 6.0f,
+			vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(),
+			hud, 2
+		);
+
+
+		
+
+
+		switch (currentHUD)
+		{
+		case(HUDStatus::C1):
+			sprintf_s(hud, "Checkpoint 1");
+			break;
+		case(HUDStatus::C2):
+			sprintf_s(hud, "Checkpoint 2");
+			break;
+		case(HUDStatus::C3):
+			sprintf_s(hud, "Checkpoint 3");
+			break;
+		case(HUDStatus::C4):
+			sprintf_s(hud, "Checkpoint 4");
+			break;
+		}
+
+		DrawTextHUD(
+			vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 2.5f,
+			vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY() + 6.5f,
+			vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(),
+			hud, 1
+		);
+
+
+
 	}
-	else
-	{
-		sprintf_s(hud, "TIME REMAINING --- 0%d:%d", (3 - minutesPassed), (59 - secondsPassed));
-	}
-	*/
-	sprintf_s(hud, "FRICCION --- %.0f", App->player->vehicle->info.frictionSlip);
-
-	DrawTextHUD(
-		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 2.5f,
-		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY() + 5.0f,
-		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(),
-		hud, 1
-	);
-
-
-	sprintf_s(hud, "Velocidad --- %.0f", App->player->vehicle->GetKmh());
-
-	DrawTextHUD(
-		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 2.5f,
-		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY() + 7.0f,
-		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(),
-		hud,1
-	);
-
-
-
-	sprintf_s(hud, "Masa Coche --- %.0f", App->player->vehicle->info.mass);
-
-	DrawTextHUD(
-		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 2.5f,
-		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY() + 6.0f,
-		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(),
-		hud,2
-	);
-
-	
 	sprintf_s(hud, "CHECKPOINT 1");
-    DrawTextHUD(0,10,0,hud, 2);
+	DrawTextHUD(0, 10, 0, hud, 2);
 
 	sprintf_s(hud, "CHECKPOINT 2");
 	DrawTextHUD(45, 60, 80, hud, 2);
@@ -379,44 +406,11 @@ update_status ModulePlayer::Update(float dt)
 	sprintf_s(hud, "CHECKPOINT 3");
 	DrawTextHUD(280, 60, 80, hud, 2);
 
+	sprintf_s(hud, "CHECKPOINT 4");
+	DrawTextHUD(250, 25, -100, hud, 2);
 
-
-	switch (currentHUD)
-	{
-	case(HUDStatus::START):
-		sprintf_s(hud, "START");
-		break;
-	case(HUDStatus::C1):
-		sprintf_s(hud, "Checkpoint 1");
-		break;
-	case(HUDStatus::C2):
-		sprintf_s(hud, "Checkpoint 2");
-		break;
-	case(HUDStatus::C3):
-		sprintf_s(hud, "Checkpoint 3");
-		break;
-	case(HUDStatus::C4):
-		sprintf_s(hud, "Checkpoint 4");
-		break;
-	case(HUDStatus::VICTORY):
-		sprintf_s(hud, "YOU WIN!");
-		break;
-	case(HUDStatus::GAME_OVER):
-		sprintf_s(hud, "YOU LOSE");
-		break;
-	}
-
-	if ((currentHUD == HUDStatus::VICTORY || currentHUD == HUDStatus::GAME_OVER) && secondsPassed > 4)
-	{
-		currentHUD = HUDStatus::START;
-	}
-
-	DrawTextHUD(
-		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getX() + 2.5f,
-		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getY() + 6.5f,
-		vehicle->vehicle->getRigidBody()->getCenterOfMassPosition().getZ(),
-		hud, 1
-	);
+	sprintf_s(hud, "META");
+	DrawTextHUD(0, 40, -100, hud, 2);
 
 	
 
@@ -485,7 +479,7 @@ void ModulePlayer::ResetPosition()
 		}
 		t.rotate(270, vec3{ 0,1,0 });
 		vehicle->SetTransform(t.M);
-		vehicle->SetPos(210, 17, -100);
+		vehicle->SetPos(250, 25, -100);
 	}
 
 	vehicle->vehicle->getRigidBody()->clearForces();
@@ -501,11 +495,6 @@ void ModulePlayer::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 		
 	}
 
-	if (body2->type == ElementType::ICE)
-	{
-		//vehicle->Push(0,100,0);
-		//App->camera->Position.x = 200;
-	}
 }
 
 void ModulePlayer::DrawTextHUD(float x, float y, float z, const char* text,int color)
@@ -530,6 +519,9 @@ void ModulePlayer::DrawTextHUD(float x, float y, float z, const char* text,int c
 
 void ModulePlayer::ResetLevel()
 {
+
+	ganar = false;
+	perder = false;
 	minutesPassed = 0;
 	secondsPassed = 0;
 	lapTimer.Start();
@@ -542,7 +534,7 @@ void ModulePlayer::ResetLevel()
 	//App->scene_intro->spawnedBalls2 = false;
 
 	App->scene_intro->primitives[16]->wire = false;
-	App->scene_intro->primitives[17]->wire = false;
+	//App->scene_intro->primitives[17]->wire = false;
 	App->scene_intro->primitives[18]->wire = false;
 	App->scene_intro->primitives[19]->wire = false;
 }
