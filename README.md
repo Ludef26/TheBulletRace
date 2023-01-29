@@ -22,15 +22,13 @@ P - Direct Lose
 
 F - Free physics
 
-1 - Go to checkpoint 1 
+1 + F3 - Go to checkpoint 1 
 
-2 - Go to checkpoint 2
+2 + F3 - Go to checkpoint 2
  
-3 - Go to checkpoint 3
+3 + F3 - Go to checkpoint 3
 
-4 - Add 1 value to gravity
-
-5 - Remove 1 value to gravity
+4 + F3 - Go to checkpoint 4
 
 9 - Add 100kg to the car 
 
