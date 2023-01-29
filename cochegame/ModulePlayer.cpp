@@ -186,7 +186,7 @@ update_status ModulePlayer::Update(float dt)
 		DrawTextHUD(10, 49, -200, hud, 2);
 
 		sprintf_s(hud, "By : Juan de Dios Garcia & Luis Fernandez");
-		DrawTextHUD(10, 48, -200, hud, 2);
+		DrawTextHUD(10.7, 48, -200, hud, 3);
 		
 	}
 	//-------boton perder
@@ -207,7 +207,7 @@ update_status ModulePlayer::Update(float dt)
 		DrawTextHUD(10, 49, -200, hud, 2);
 		
 		sprintf_s(hud, "By : Juan de Dios Garcia & Luis Fernandez");
-		DrawTextHUD(10, 48, -200, hud, 2);
+		DrawTextHUD(10.7, 48, -200, hud, 3);
 	}
 	//-----------------------------------------------
 	
@@ -520,6 +520,9 @@ void ModulePlayer::DrawTextHUD(float x, float y, float z, const char* text,int c
 	glColor4b(100.0f, 0.0f, 0.0f, 0.0f);
 	}
 
+	else if (color == 3) {
+		glColor4b(0.0f, 100.0f, 0.0f, 0.0f);
+	}
 
 	glRasterPos3f(x, y, z);
 	int textLength = strlen(text);
