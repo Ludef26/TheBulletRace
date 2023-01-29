@@ -114,22 +114,22 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	}
 
 	
-	if (body1->type == ElementType::CHECKPOINT && body1->isSensor && checkpoint == 0)
+	if (body1->type == ElementType::CHECKPOINT && body1->isSensor && checkpoint == 1)
 	{
 		checkpoint = 1;
 		App->player->currentHUD = HUDStatus::C1;
 	}
-	if (body1->type == ElementType::CHECKPOINT2 && body1->isSensor && checkpoint == 1)
+	if (body1->type == ElementType::CHECKPOINT2 && body1->isSensor && checkpoint == 2)
 	{
 		checkpoint = 2;
 		App->player->currentHUD = HUDStatus::C2;
 	}
-	if (body1->type == ElementType::CHECKPOINT3 && body1->isSensor && checkpoint == 2)
+	if (body1->type == ElementType::CHECKPOINT3 && body1->isSensor && checkpoint == 3)
 	{
 		checkpoint = 3;
 		App->player->currentHUD = HUDStatus::C3;
 	}
-	if (body1->type == ElementType::CHECKPOINT4 && body1->isSensor && checkpoint == 3)
+	if (body1->type == ElementType::CHECKPOINT4 && body1->isSensor && checkpoint == 4)
 	{
 		checkpoint = 4;
 		App->player->currentHUD = HUDStatus::C4;

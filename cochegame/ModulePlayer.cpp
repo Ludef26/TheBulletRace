@@ -184,6 +184,9 @@ update_status ModulePlayer::Update(float dt)
 
 		sprintf_s(hud, "R to Restart");
 		DrawTextHUD(10, 49, -200, hud, 2);
+
+		sprintf_s(hud, "By : Juan de Dios Garcia & Luis Fernandez");
+		DrawTextHUD(10, 48, -200, hud, 2);
 		
 	}
 	//-------boton perder
@@ -203,6 +206,8 @@ update_status ModulePlayer::Update(float dt)
 		sprintf_s(hud, "R to Restart");
 		DrawTextHUD(10, 49, -200, hud, 2);
 		
+		sprintf_s(hud, "By : Juan de Dios Garcia & Luis Fernandez");
+		DrawTextHUD(10, 48, -200, hud, 2);
 	}
 	//-----------------------------------------------
 	
